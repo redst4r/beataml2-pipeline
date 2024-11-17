@@ -1,0 +1,81 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+#
+
+clinical_sheet:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/beataml_wv1to4_clinical.xlsx
+  load_args:
+    sheet_name: summary
+    engine: openpyxl
+
+clinical_intermediate:
+  type: pandas.CSVDataset
+  filepath: data/02_intermediate/clinical_intermediate.csv
+
+mapping_sheet:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/beataml_waves1to4_sample_mapping.xlsx
+  load_args:
+    sheet_name: sample_map
+    engine: openpyxl
+
+mutations:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/beataml_wes_wv1to4_mutations_dbgap.txt
+  load_args:
+    sep: '\t'
+    engine: python
+
+mutations_suppl:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/NIHMS1504008-supplement-Supplementary_Tables_S1-S22.xlsx
+  load_args:
+    sheet_name: Table S7-Variants for Analysis
+    engine: openpyxl
+
+
+
+expression:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/beataml_waves1to4_norm_exp_dbgap.txt
+  load_args:
+    sep: '\t'
+    engine: python
+
+drugs:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/beataml_probit_curve_fits_v4_dbgap.txt
+  load_args:
+    sep: '\t'
+    engine: python
+
+drug_families:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/beataml_drug_families.xlsx
+  load_args:
+    sheet_name: [synonyms, drug_family]
+    engine: openpyxl
+
+
+expr_adata:
+  type: beataml2_pipeline.datasets.anndata_dataset.AnnDataset
+  filepath: data/02_intermediate/rnaseq.h5ad
+
+drug_ic50_adata:
+  type: beataml2_pipeline.datasets.anndata_dataset.AnnDataset
+  filepath: data/02_intermediate/drug_ic50.h5ad
+
+drug_auc_adata:
+  type: beataml2_pipeline.datasets.anndata_dataset.AnnDataset
+  filepath: data/02_intermediate/drug_auc.h5ad
+
+mut_gene_adata:
+  type: beataml2_pipeline.datasets.anndata_dataset.AnnDataset
+  filepath: data/02_intermediate/mutations_gene.h5ad
+
+integrated_data:
+  type: beataml2_pipeline.datasets.anndata_dataset.MuDataset
+  filepath: data/02_intermediate/beataml2.h5mu
