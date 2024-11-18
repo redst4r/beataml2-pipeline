@@ -17,9 +17,8 @@ dependencies = [
  "kedro-viz>=6.7.0",
  "scikit-learn~=1.5.1",
  "seaborn>=0.12.1", # weird, ~= pins it and doesnt work with scanpy 1.10.3
- "anndata==0.10.8", # 0.10.9 doesnt work with muon 0.1.7
- "muon>=0.1.7",
- "scanpy==1.10.2",
+ "anndata==0.10.8",
+ "mudata>=0.2.4",
 ]
 
 [project.scripts]

@@ -9,6 +9,7 @@ from kedro.io.core import get_filepath_str, get_protocol_and_path
 import logging
 
 import anndata
+import mudata
 
 logger = logging.getLogger(__name__)
 
@@ -59,9 +60,6 @@ class AnnDataset(AbstractDataset[anndata.AnnData, anndata.AnnData]):
         return {"summy": "dummy"}
 
 
-
-
-import muon as mu
 class MuDataset(AbstractDataset[anndata.AnnData, anndata.AnnData]):
     def __init__(self, filepath: str):
         """Creates a new instance of MuDataset to load / savee for given filepath.
@@ -89,11 +87,11 @@ class MuDataset(AbstractDataset[anndata.AnnData, anndata.AnnData]):
         logger.debug(f"Loading MuData from {load_path}!")
 
         # adata = anndata.read_h5ad(load_path)
-        mdata = mu.read(load_path)
+        mdata = mudata.read(load_path)
         logger.debug("Done loading!")
         return mdata
 
-    def _save(self, mdata: mu.MuData) -> None:
+    def _save(self, mdata: mudata.MuData) -> None:
         """Saves grape.Graph to the specified filepath."""
 
         save_path = get_filepath_str(self._filepath, self._protocol)

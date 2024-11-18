@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 import anndata
 from pandas.api.types import  is_object_dtype, is_bool_dtype
-import muon as mu
+import mudata
 
 def _subject_id_to_patient(sub: pd.Series):
     # make the patient id a bit more reader-friendly
@@ -174,7 +174,7 @@ def to_muon(expr_adata, mut_gene_adata, drug_auc_adata, df_clinical):
         'rna': expr_adata,
         'dna': mut_gene_adata
     }
-    mdata = mu.MuData(mods)
+    mdata = mudata.MuData(mods)
     mdata.obs = mdata.obs.join(df_meta)
     return mdata
 
