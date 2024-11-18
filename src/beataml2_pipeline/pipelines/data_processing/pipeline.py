@@ -25,7 +25,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=load_mutations,
-                inputs=["mutations", "mutations_suppl", "mapping_intermediate"],
+                inputs=["mutations", "mutations_suppl", "mapping_intermediate", "clinical_intermediate"],
                 outputs="mut_gene_adata",
             ),
             node(

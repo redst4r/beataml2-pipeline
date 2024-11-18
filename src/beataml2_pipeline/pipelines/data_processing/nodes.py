@@ -94,7 +94,7 @@ def load_drugs(df_drug, df_family_dict, df_map):
     return adata_drug_IC50, adata_drug_auc
 
 
-def load_mutations(df_mut, df_mut_suppl, df_mapping):
+def load_mutations(df_mut, df_mut_suppl, df_mapping, df_clinical_intermediate):
 
     # rna_to_lab = df_mapping.dropna(subset=['dbgap_rnaseq_sample','labId']).set_index('dbgap_rnaseq_sample').labId.to_dict()
     dna_to_lab = df_mapping.dropna(subset=['dbgap_dnaseq_sample','labId']).set_index('dbgap_dnaseq_sample').labId.to_dict()
@@ -117,6 +117,14 @@ def load_mutations(df_mut, df_mut_suppl, df_mapping):
     account for the samples that didnt show any mutation and are hence missing from the WES sheet
     """
     df_mut_gene = (pd.crosstab(df_mut.labId, df_mut.symbol) > 0).astype(int)
+
+    # manually add the FLT3 status from the clinical sheet
+    flt3_itd_status = df_clinical_intermediate.set_index('labId')['FLT3-ITD'].replace({
+        'positive': 1.0,
+        'negative': 0.0,
+        'unknown': np.nan
+    }).to_dict()
+    df_mut_gene['FLT3-ITD'] = df_mut_gene.index.map(lambda x: flt3_itd_status[x] if x in flt3_itd_status else np.nan)
 
     # account for the samples that didnt show any mutation and are hence missing from the WES sheet
     labs_with_dnaseq = list(dna_to_lab.values())
