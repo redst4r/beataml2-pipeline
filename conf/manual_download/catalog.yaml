@@ -1,0 +1,61 @@
+# 
+# Overwriting the remote-URLs of the raw data
+# by local versions
+
+clinical_sheet:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/beataml_wv1to4_clinical.xlsx
+  load_args:
+    sheet_name: summary
+    engine: openpyxl
+
+mapping_sheet:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/beataml_waves1to4_sample_mapping.xlsx
+  load_args:
+    sheet_name: sample_map
+    engine: openpyxl
+
+mutations:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/beataml_wes_wv1to4_mutations_dbgap.txt
+  load_args:
+    sep: '\t'
+    engine: python
+
+mutations_suppl:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/NIHMS1504008-supplement-Supplementary_Tables_S1-S22.xlsx
+  load_args:
+    sheet_name: Table S7-Variants for Analysis
+    engine: openpyxl
+
+
+expression:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/beataml_waves1to4_norm_exp_dbgap.txt
+  load_args:
+    sep: '\t'
+    engine: python
+
+drugs:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/beataml_probit_curve_fits_v4_dbgap.txt
+  load_args:
+    sep: '\t'
+    engine: python
+
+drug_families:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw/beataml_drug_families.xlsx
+  load_args:
+    sheet_name: [synonyms, drug_family]
+    engine: openpyxl
+
+drugs_raw:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/beataml_wv1to4_raw_inhibitor_v4_dbgap.txt
+  load_args:
+    sep: '\t'
+    engine: python
+
