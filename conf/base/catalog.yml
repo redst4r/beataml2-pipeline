@@ -84,4 +84,4 @@ mut_gene_adata:
 
 integrated_data:
   type: beataml2_pipeline.datasets.anndata_dataset.MuDataset
-  filepath: data/02_intermediate/beataml2.h5mu
+  filepath: data/03_primary/beataml2.h5mu
