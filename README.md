@@ -48,3 +48,6 @@ import muon as mu
 mu.read('data/03_primary/beataml2.h5mu')
 ```
 
+## TODO
+- [ ] Nov2024: In the original code, they overwrite some of the WES-data with labs done for specific mutations. E.g. even though the sequencing data didnt show any NPM1 mutation, the clinical data might have NPM1 annotated as mutated (via some other assay). They'd correct the `sample x mutation` matrix to include that mutation (changing the entry from 0 to 1)
+
