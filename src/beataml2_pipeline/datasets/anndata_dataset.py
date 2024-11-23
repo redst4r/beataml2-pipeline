@@ -23,9 +23,7 @@ class AnnDataset(AbstractDataset[anndata.AnnData, anndata.AnnData]):
                       Convention is: filepath is a directory with two files: `nodes.tsv` and `edges.tsv
         """
         # parse the path and protocol (e.g. file, http, s3, etc.) for nodes
-        protocol, path = get_protocol_and_path(
-            PurePosixPath(filepath)
-        )
+        protocol, path = get_protocol_and_path(PurePosixPath(filepath))
         self._protocol = protocol
         self._filepath = PurePosixPath(path)
         self._fs = fsspec.filesystem(self._protocol)
@@ -55,7 +53,6 @@ class AnnDataset(AbstractDataset[anndata.AnnData, anndata.AnnData]):
         adata.write_h5ad(save_path)
         logger.debug(f"Saving anndata edges to {save_path}")
 
-
     def _describe(self) -> Dict[str, Any]:
         return {"summy": "dummy"}
 
@@ -69,9 +66,7 @@ class MuDataset(AbstractDataset[anndata.AnnData, anndata.AnnData]):
                       Convention is: filepath is a directory with two files: `nodes.tsv` and `edges.tsv
         """
         # parse the path and protocol (e.g. file, http, s3, etc.) for nodes
-        protocol, path = get_protocol_and_path(
-            PurePosixPath(filepath)
-        )
+        protocol, path = get_protocol_and_path(PurePosixPath(filepath))
         self._protocol = protocol
         self._filepath = PurePosixPath(path)
         self._fs = fsspec.filesystem(self._protocol)
@@ -100,7 +95,6 @@ class MuDataset(AbstractDataset[anndata.AnnData, anndata.AnnData]):
 
         mdata.write(save_path)
         logger.debug(f"Saving MuData edges to {save_path}")
-
 
     def _describe(self) -> Dict[str, Any]:
         return {"summy": "dummy"}

@@ -1,6 +1,15 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import load_expression, load_clinical, load_mapping, load_drugs, load_mutations, to_muon, load_malignant_celltypes
+from .nodes import (
+    load_expression,
+    load_clinical,
+    load_mapping,
+    load_drugs,
+    load_mutations,
+    to_muon,
+    load_malignant_celltypes,
+)
+
 
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
@@ -19,13 +28,18 @@ def create_pipeline(**kwargs) -> Pipeline:
             ),
             node(
                 func=load_drugs,
-                inputs=["drugs", "drug_families","mapping_intermediate"],
+                inputs=["drugs", "drug_families", "mapping_intermediate"],
                 outputs=["drug_ic50_adata", "drug_auc_adata"],
                 # name="preprocess_shuttles_node",
             ),
             node(
                 func=load_mutations,
-                inputs=["mutations", "mutations_suppl", "mapping_intermediate", "clinical_intermediate"],
+                inputs=[
+                    "mutations",
+                    "mutations_suppl",
+                    "mapping_intermediate",
+                    "clinical_intermediate",
+                ],
                 outputs="mut_gene_adata",
             ),
             node(
@@ -37,10 +51,16 @@ def create_pipeline(**kwargs) -> Pipeline:
                 func=load_malignant_celltypes,
                 inputs=["malignant_celltypes", "mapping_intermediate"],
                 outputs="malignant_ct_adata",
-            ),            
+            ),
             node(
                 func=to_muon,
-                inputs=["expr_adata", "mut_gene_adata", "drug_auc_adata", "clinical_intermediate", "malignant_ct_adata"],
+                inputs=[
+                    "expr_adata",
+                    "mut_gene_adata",
+                    "drug_auc_adata",
+                    "clinical_intermediate",
+                    "malignant_ct_adata",
+                ],
                 outputs="integrated_data",
             ),
         ]

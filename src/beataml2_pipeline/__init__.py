@@ -1,4 +1,3 @@
-"""beataml2-pipeline
-"""
+"""beataml2-pipeline"""
 
 __version__ = "0.1"
