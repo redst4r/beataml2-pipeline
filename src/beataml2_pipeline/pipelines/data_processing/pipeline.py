@@ -1,6 +1,6 @@
 from kedro.pipeline import Pipeline, node, pipeline
 
-from .nodes import load_expression, load_clinical, load_mapping, load_drugs, load_mutations, to_muon
+from .nodes import load_expression, load_clinical, load_mapping, load_drugs, load_mutations, to_muon, load_malignant_celltypes
 
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline(
@@ -34,8 +34,13 @@ def create_pipeline(**kwargs) -> Pipeline:
                 outputs="expr_adata",
             ),
             node(
+                func=load_malignant_celltypes,
+                inputs=["malignant_celltypes", "mapping_intermediate"],
+                outputs="malignant_ct_adata",
+            ),            
+            node(
                 func=to_muon,
-                inputs=["expr_adata", "mut_gene_adata", "drug_auc_adata", "clinical_intermediate"],
+                inputs=["expr_adata", "mut_gene_adata", "drug_auc_adata", "clinical_intermediate", "malignant_ct_adata"],
                 outputs="integrated_data",
             ),
         ]

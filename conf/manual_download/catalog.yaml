@@ -59,3 +59,9 @@ drugs_raw:
     sep: '\t'
     engine: python
 
+malignant_celltypes:
+  type: pandas.ExcelDataset
+  filepath: data/01_raw//beataml2_manuscript_vg_cts.xlsx
+  load_args:
+    sheet_name: Malignant Cell Type Scores
+    engine: openpyxl

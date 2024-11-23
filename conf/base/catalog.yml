@@ -61,6 +61,13 @@ drugs_raw:
     sep: '\t'
     engine: python
 
+malignant_celltypes:
+  type: pandas.ExcelDataset
+  filepath: https://github.com/biodev/beataml2.0_data/raw/main/beataml2_manuscript_vg_cts.xlsx
+  load_args:
+    sheet_name: Malignant Cell Type Scores
+    engine: openpyxl
+
 
 clinical_intermediate:
   type: pandas.CSVDataset
@@ -81,6 +88,10 @@ drug_auc_adata:
 mut_gene_adata:
   type: beataml2_pipeline.datasets.anndata_dataset.AnnDataset
   filepath: data/02_intermediate/mutations_gene.h5ad
+
+malignant_ct_adata:
+  type: beataml2_pipeline.datasets.anndata_dataset.AnnDataset
+  filepath: data/02_intermediate/malignant_ct.h5ad
 
 integrated_data:
   type: beataml2_pipeline.datasets.anndata_dataset.MuDataset

@@ -166,13 +166,25 @@ def load_expression(df_expr: pd.DataFrame, df_mapping):
 
     return adata_rna
 
-def to_muon(expr_adata, mut_gene_adata, drug_auc_adata, df_clinical):
+
+def load_malignant_celltypes(df: pd.DataFrame, df_mapping: pd.DataFrame):
+    # df = catalog.load('malignant_celltypes')
+    # df_mapping = catalog.load('mapping_sheet')
+    rna_to_lab = df_mapping.dropna(subset=['dbgap_rnaseq_sample','labId']).set_index('dbgap_rnaseq_sample').labId.to_dict()
+
+    df = df.set_index('dbgap_rnaseq_sample')
+    df.index = df.index.map(lambda x: rna_to_lab[x])
+
+    return  anndata.AnnData(df)
+
+def to_muon(expr_adata, mut_gene_adata, drug_auc_adata, df_clinical, malignant_ct_adata):
     df_meta = df_clinical.set_index('labId')
 
     mods = {
         'drugs': drug_auc_adata,
         'rna': expr_adata,
-        'dna': mut_gene_adata
+        'dna': mut_gene_adata,
+        'malignant_ct': malignant_ct_adata,
     }
     mdata = mudata.MuData(mods)
     mdata.obs = mdata.obs.join(df_meta)
