@@ -31,7 +31,8 @@ mutations_suppl:
   load_args:
     sheet_name: Table S7-Variants for Analysis
     engine: openpyxl
-
+  fs_args:   # important for NCBI website, without, we get a 403 error
+      User-Agent: 'Mozilla/5.0'
 
 expression:
   type: pandas.CSVDataset

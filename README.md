@@ -32,10 +32,13 @@ kedro run -e base
 ```
 This will pull the raw data from the web, and store the final `.h5mu` in `data/03_primary/beataml2.h5mu`.
 
-*Note*: Sometimes the download of [this spreadsheet from PMC](https://pmc.ncbi.nlm.nih.gov/articles/instance/6280667/bin/NIHMS1504008-supplement-Supplementary_Tables_S1-S22.xlsx) fails with a 403-error, not sure why!
+*Note*: This can get time-consuming if the pipeline is run multiple times (downloading ~500Mb each time).
+Use the `manual download` option in those cases (which persists those files to disk)
 
 ### Manually downloaded
 A bit more manual work: Download all the files from [this website](https://biodev.github.io/BeatAML2/) and [this spreadsheet from PMC](https://pmc.ncbi.nlm.nih.gov/articles/instance/6280667/bin/NIHMS1504008-supplement-Supplementary_Tables_S1-S22.xlsx) into `data/01_raw`, making sure that the names are correct (compare with `conf/local/catalog.yaml`).
+
+*Note*: this can be semi-automated, running the script `download_data.sh`.
 
 ```bash
 kedro run -e local

@@ -62,6 +62,7 @@ def create_pipeline(**kwargs) -> Pipeline:
                     "malignant_ct_adata",
                 ],
                 outputs="integrated_data",
+                name="to_muon"
             ),
         ]
     )
